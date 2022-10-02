@@ -3,8 +3,8 @@ import re
 
 session = requests.Session()
 response = session.post('https://netstalkers.com/api/auth/jwt/create/', {
-     'password': 'Artem1337k.',
-     'username': 'devil666face',
+     'password': '',
+     'username': '',
 })
 cookies = session.cookies
 
