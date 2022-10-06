@@ -1,10 +1,11 @@
 import requests
 import re
+import shutil
 
 session = requests.Session()
 response = session.post('https://netstalkers.com/api/auth/jwt/create/', {
-     'password': '',
-     'username': '',
+     'password': 'Artem1337k.',
+     'username': 'devil666face',
 })
 cookies = session.cookies
 
@@ -27,10 +28,16 @@ for i in range (1,100):
 
 
 for video_id in video_dict:
+    # if video_id==10:
     url = f'https://netstalkers.com/api/stream/{video_id}/'
     print(f'Скачиваю {url}')
-    
-    video_response = session.get(url)
-    print(video_response)
-    with open(f'{video_dict.get(video_id)}.mp4','wb') as video:
-        video.write(video_response.content)
+    header = {"Range": "bytes=0-"}
+    with session.get(url, headers=header, stream=True) as video_response:
+        video_response.raise_for_status()
+        with open(f'{video_id}|{video_dict.get(video_id)}.mp4','wb') as video:
+            # for chunk in video_response.iter_content(chunk_size=1024):
+            #     if chunk:
+            #         video.write(chunk)
+            #         # video_response.content
+            shutil.copyfileobj(video_response.raw, video)
+
